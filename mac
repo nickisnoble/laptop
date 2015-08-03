@@ -113,6 +113,16 @@ gem_install_or_update() {
   fi
 }
 
+npm_install_or_update() {
+  if npm list "$1" --installed > /dev/null; then
+    fancy_echo "Updating %s ..." "$1"
+    npm update -g "$@"
+  else
+    fancy_echo "Installing %s ..." "$1"
+    npm install -g "$@"
+  fi
+}
+
 if ! command -v brew >/dev/null; then
   fancy_echo "Installing Homebrew ..."
     curl -fsS \
@@ -144,6 +154,9 @@ brew_install_or_upgrade 'git-flow'
 brew_install_or_upgrade 'node'
 brew_install_or_upgrade 'rbenv'
 brew_install_or_upgrade 'ruby-build'
+
+# Fix npm permissons
+# sudo chown -R $(whoami) ~/.npm /usr/local/lib/node_modules
 
 # shellcheck disable=SC2016
 append_to_zshrc 'eval "$(rbenv init - --no-rehash zsh)"' 1
@@ -179,4 +192,12 @@ brew_install_or_upgrade 'heroku-toolbelt'
 
 if [ -f "$HOME/.laptop.local" ]; then
   . "$HOME/.laptop.local"
+fi
+
+if ! command -v meteor >/dev/null; then
+  fancy_echo "Installing Meteor ..."
+    curl \
+      'https://install.meteor.com/' | sh
+else
+  fancy_echo "Meteor already installed. Skipping ..."
 fi
