@@ -154,6 +154,7 @@ brew_install_or_upgrade 'git-flow'
 brew_install_or_upgrade 'node'
 brew_install_or_upgrade 'rbenv'
 brew_install_or_upgrade 'ruby-build'
+brew_install_or_upgrade 'zsh-syntax-highlighting'
 
 # Fix npm permissons
 # sudo chown -R $(whoami) ~/.npm /usr/local/lib/node_modules
